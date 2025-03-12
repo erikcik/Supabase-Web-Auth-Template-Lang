@@ -1,0 +1,133 @@
+---
+description: Apply these rules when creating the project
+globs:
+alwaysApply: true
+---
+## Project Overview
+
+*   **Type:** cursor_project_rules
+*   **Description:** I want to build fully fletched authentication logic that can be able to work both in next js app and expo app and they are going to be developed in mono repo and these accounts are going to handled in same supabase database instance with same auth logic. You should implement sign in, sign out, sign up, protected pages, profile page, support for google, github, facebook and apple oauth with all possible security measures done by following best practices of supabase authentication.
+*   **Primary Goal:** Implement a robust and unified authentication system for both web (Next.js 14) and mobile (Expo SDK 52) platforms that utilizes Supabase Auth for session management, integrates multiple OAuth providers with username capture, enforces rate limiting and security best practices, and adheres to a neo-brutalist design using Aceternity UI with comforting royal blue hues.
+
+## Project Structure
+
+### Framework-Specific Routing
+
+*   **Directory Rules:**
+
+    *   **Next.js 14 (App Router):** Uses the `app/` directory with nested route folders. For example, authentication routes are organized as `app/auth/login/page.tsx`, `app/auth/signup/page.tsx`, and profile as `app/profile/page.tsx`.
+    *   **Expo SDK 52 (React Native):** The mobile structure resides under a `mobile/` folder. Navigation is handled via bottom tabs with distinct screens such as `mobile/screens/Home.tsx` and `mobile/screens/Profile.tsx`.
+
+### Core Directories
+
+*   **Versioned Structure:**
+
+    *   **Web (Next.js):**
+
+        *   `app/api`: For Next.js 14 API routes using Route Handlers (e.g., sign in, sign up, OAuth callbacks).
+        *   `app/auth`: Houses authentication flows including login, signup, and OAuth username capture.
+        *   `app/profile`: Contains profile page layouts and post management components.
+
+    *   **Mobile (Expo):**
+
+        *   `mobile/src`: Holds React Native components built with react-native-reusables and styled using nativewind.
+        *   `mobile/screens`: Dedicated to main application screens (Home and Profile) with navigation integrated via bottom tabs.
+
+### Key Files
+
+*   **Stack-Versioned Patterns:**
+
+    *   **Next.js 14:**
+
+        *   `app/dashboard/layout.tsx` → Defines the root layout and organizes nested authentication and profile routes.
+
+    *   **Expo (Mobile):**
+
+        *   `mobile/App.tsx` → Serves as the entry point for the Expo app managing navigation and global providers.
+
+## Tech Stack Rules
+
+*   **Version Enforcement:**
+
+    *   **next@14:** Enforce the use of the App Router. No usage of deprecated methods like `getInitialProps`.
+    *   **expo_sdk@52:** Adhere to the latest Expo patterns using React Native Reusables components and nativewind for styling.
+    *   **supabase_auth & supabase:** All authentication and session management must leverage Supabase’s best practices, including database-backed sessions and automatic token refresh.
+
+## PRD Compliance
+
+*   **Non-Negotiable:**
+
+    *   "Sessions are maintained via Supabase database with automatic token refresh every time a user accesses the site." → This requires both web and mobile clients to consistently refresh tokens upon each entry, ensuring session integrity.
+
+## App Flow Integration
+
+*   **Stack-Aligned Flow:**
+
+    *   **Next.js 14 Auth Flow:** Routes such as `app/auth/login/page.tsx`, `app/auth/signup/page.tsx`, and `app/profile/page.tsx` implement complete authentication with OAuth providers and custom username capture.
+    *   **Expo Mobile Flow:** Bottom tab navigation directs users to `mobile/screens/Home.tsx` for content display and `mobile/screens/Profile.tsx` for session checks and post management, with automatic redirection to profile post authentication.
+
+## Best Practices
+
+*   **next_js_14**
+
+    *   Follow App Router conventions; organize routes within the `app/` directory.
+    *   Use server actions where applicable for secure data fetching.
+    *   Integrate shadcn skeleton components to provide instant loading feedback.
+
+*   **typescript**
+
+    *   Enforce strict type-checking and interface definitions.
+    *   Utilize modern ES modules and async/await for asynchronous operations.
+    *   Maintain type safety across API interactions.
+
+*   **tailwind_css**
+
+    *   Use utility-first CSS classes for rapid UI development.
+    *   Maintain consistent spacing, layout, and color palettes.
+    *   Integrate with nativewind for seamless mobile styling.
+
+*   **shadcn_ui**
+
+    *   Leverage skeleton components and dedicated OTP input components for excellent user feedback.
+    *   Ensure component consistency across pages.
+    *   Follow accessibility best practices.
+
+*   **radix_ui**
+
+    *   Utilize accessible UI primitives to enhance user experience.
+    *   Ensure interactive components follow ARIA guidelines.
+
+*   **lucide_icons**
+
+    *   Use icons sparingly to maintain a clean interface.
+    *   Follow consistent iconography across web and mobile.
+
+*   **aceternity_ui**
+
+    *   Emphasize neo-brutalist design with minimalist layouts.
+    *   Use royal blue hues to maintain visual consistency.
+    *   Rely on Aceternity UI components as much as possible for styling.
+
+*   **expo_sdk_52**
+
+    *   Adhere to Expo best practices for performance and cross-platform compatibility.
+    *   Leverage react-native-reusables for common, reliable components.
+    *   Utilize nativewind for efficient styling in React Native.
+
+*   **supabase_auth & supabase**
+
+    *   Implement database-backed sessions with automatic token refresh.
+    *   Integrate robust rate limiting and throttling (e.g., IP-based and email-based limits) with casual error messages.
+    *   Ensure secure handling of OAuth flows and email verification processes.
+
+## Rules
+
+*   Derive folder/file patterns directly from the tech stack documentation, ensuring clear separation between web and mobile projects.
+*   If Next.js 14 App Router is used: Enforce the `app/` directory with nested route folders; never mix pages-based routing.
+*   For Expo projects: Maintain a dedicated `mobile/` folder with clear navigation patterns for screen-based flows using bottom tabs.
+*   Uniformly adhere to design requirements: neo-brutalist style, minimalistic layouts, and comforting royal blue hues with Aceternity UI.
+*   Ensure that rate limiting, OTP verification, login throttling, and error messages are implemented consistently across both platforms with custom, casually toned notifications.
+*   Maintain multilingual support (Turkish and English) with language selection via a modal on first access.
+*   Reinforce security by following Supabase’s best practices for session management and automatic token refresh.
+*   CRUD operations for posts must allow creation, update, and deletion from the profile page on both web and mobile.
+*   Always prompt OAuth users to capture a username immediately after authentication.
