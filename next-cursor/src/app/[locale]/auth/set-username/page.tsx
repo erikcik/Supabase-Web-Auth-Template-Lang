@@ -20,33 +20,25 @@ export default function SetUsername() {
 
   // Fetch the current user
   useEffect(() => {
-    console.log('SetUsername page loaded for provider:', provider);
     const checkUser = async () => {
       try {
-        console.log('Checking for authenticated user');
         const { data: { user }, error } = await supabase.auth.getUser();
         
         if (error) {
-          console.error('Error fetching user:', error);
           toast.error('Authentication error. Please try logging in again.');
           router.push('/auth/signin');
           return;
         }
         
         if (!user) {
-          console.log('No authenticated user found, redirecting to signin');
           toast.error('You must be logged in to set a username.');
           router.push('/auth/signin');
           return;
         }
 
-        console.log('User authenticated:', user.id);
-        console.log('Auth metadata:', JSON.stringify(user.app_metadata || {}));
-        console.log('User metadata:', JSON.stringify(user.user_metadata || {}));
 
         setUser(user);
       } catch (error) {
-        console.error('Unexpected error in checkUser:', error);
         toast.error('An unexpected error occurred. Please try again.');
       }
     };
@@ -81,11 +73,9 @@ export default function SetUsername() {
     }
 
     setIsLoading(true);
-    console.log('Attempting to set username:', username);
 
     try {
       // Check if username already exists
-      console.log('Checking if username already exists');
       const { data: existingUsername, error: usernameError } = await supabase
         .from('profiles')
         .select('id')
@@ -93,14 +83,12 @@ export default function SetUsername() {
         .maybeSingle();
 
       if (usernameError) {
-        console.error('Error checking for existing username:', usernameError);
         toast.error('Error checking username availability. Please try again.');
         setIsLoading(false);
         return;
       }
 
       if (existingUsername) {
-        console.log('Username already taken:', username);
         toast.error('This username is already taken. Please choose another one.');
         setUsernameError('This username is already taken. Please choose another one.');
         setIsLoading(false);
@@ -108,7 +96,6 @@ export default function SetUsername() {
       }
 
       // Update the profile with the new username
-      console.log('Updating profile with username');
       const { error: updateError } = await supabase
         .from('profiles')
         .update({ 
@@ -118,7 +105,6 @@ export default function SetUsername() {
         .eq('id', user.id);
 
       if (updateError) {
-        console.error('Error updating profile:', updateError);
         
         if (updateError.message.includes('duplicate key') || updateError.message.includes('unique constraint')) {
           toast.error('This username is already taken. Please choose another one.');
@@ -132,21 +118,17 @@ export default function SetUsername() {
       }
 
       // Update user metadata
-      console.log('Updating auth user metadata');
       const { error: metadataError } = await supabase.auth.updateUser({
         data: { username }
       });
 
       if (metadataError) {
-        console.error('Error updating user metadata:', metadataError);
         // We'll continue since the profile was updated successfully
       }
 
-      console.log('Username set successfully:', username);
       toast.success('Username set successfully!');
       router.push('/');
     } catch (error) {
-      console.error('Unexpected error in handleSubmit:', error);
       toast.error('An unexpected error occurred. Please try again.');
     } finally {
       setIsLoading(false);

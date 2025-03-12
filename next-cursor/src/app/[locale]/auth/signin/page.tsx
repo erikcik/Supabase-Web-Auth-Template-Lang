@@ -48,7 +48,6 @@ export default function SignIn() {
 
   const handleOAuthSignIn = async (provider: 'github' | 'google') => {
     try {
-      console.log(`Initiating OAuth sign-in with ${provider}`);
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {

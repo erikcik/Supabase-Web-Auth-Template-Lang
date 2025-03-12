@@ -124,7 +124,6 @@ export default function SignUp() {
 
   const handleOAuthSignUp = async (provider: 'github' | 'google') => {
     try {
-      console.log(`Initiating OAuth sign-up with ${provider}`);
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
